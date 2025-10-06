@@ -1,0 +1,313 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local Player = Players.LocalPlayer
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "SpectraXExecutor"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = Player:WaitForChild("PlayerGui")
+
+-- Config
+local defaultWidth, defaultHeight = 403, 208
+local minWidth, minHeight = 300, 180
+local headerHeight = 30
+local contentVisible = true
+local lastSize = UDim2.new(0, defaultWidth, 0, defaultHeight)
+local scriptsVisible = false
+
+-- Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = lastSize
+MainFrame.Position = UDim2.new(0.5, -defaultWidth / 2, 0.5, -defaultHeight / 2)
+MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.BorderColor3 = Color3.fromRGB(0, 255, 0)
+MainFrame.Parent = ScreenGui
+
+-- Header
+local Header = Instance.new("Frame")
+Header.Size = UDim2.new(1, 0, 0, headerHeight)
+Header.BackgroundTransparency = 1
+Header.Parent = MainFrame
+
+-- 🔰 Logo
+local Logo = Instance.new("ImageLabel")
+Logo.BackgroundTransparency = 1
+Logo.Size = UDim2.new(0, 120, 0, 86)
+Logo.Position = UDim2.new(0, 3, 0, -27)
+Logo.Image = "rbxassetid://130599733754166"
+Logo.Parent = Header
+
+-- Tombol
+local function MakeButton(txt, posX, width)
+local btn = Instance.new("TextButton")
+btn.Size = UDim2.new(0, width or 30, 0, 30)
+btn.Position = UDim2.new(1, posX, 0, 0)
+btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+btn.BorderColor3 = Color3.fromRGB(0, 255, 0)
+btn.Font = Enum.Font.Code
+btn.TextSize = 16
+btn.TextColor3 = Color3.fromRGB(0, 255, 0)
+btn.Text = txt
+btn.Parent = Header
+return btn
+end
+
+local CloseButton = MakeButton("X", -30)
+local MinimizeButton = MakeButton("-", -60)
+local ScriptsButton = MakeButton("Scripts", -146, 80)
+
+-- Content Frame
+local ContentFrame = Instance.new("Frame")
+ContentFrame.Size = UDim2.new(1, 0, 1, -headerHeight)
+ContentFrame.Position = UDim2.new(0, 0, 0, headerHeight)
+ContentFrame.BackgroundTransparency = 1
+ContentFrame.Parent = MainFrame
+
+-- Scroll + TextBox
+local Scroll = Instance.new("ScrollingFrame")
+Scroll.Size = UDim2.new(1, -10, 1, -50)
+Scroll.Position = UDim2.new(0, 5, 0, 5)
+Scroll.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Scroll.BorderColor3 = Color3.fromRGB(0, 255, 0)
+Scroll.ScrollBarThickness = 6
+Scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+Scroll.ScrollingEnabled = false
+Scroll.Parent = ContentFrame
+
+local Source = Instance.new("TextBox")
+Source.Size = UDim2.new(1, -10, 1, -10)
+Source.Position = UDim2.new(0, 5, 0, 5)
+Source.BackgroundTransparency = 1
+Source.ClearTextOnFocus = false
+Source.MultiLine = true
+Source.TextWrapped = false
+Source.TextXAlignment = Enum.TextXAlignment.Left
+Source.TextYAlignment = Enum.TextYAlignment.Top
+Source.Text = ""
+Source.TextColor3 = Color3.fromRGB(0, 255, 0)
+Source.Font = Enum.Font.Code
+Source.TextSize = 14
+Source.Parent = Scroll
+
+-- Scroll hanya aktif saat fokus
+Source.Focused:Connect(function()
+Scroll.ScrollingEnabled = true
+end)
+Source.FocusLost:Connect(function()
+Scroll.ScrollingEnabled = false
+end)
+
+-- Execute Button
+local ExecuteBtn = Instance.new("TextButton")
+ExecuteBtn.Size = UDim2.new(0, 100, 0, 30)
+ExecuteBtn.Position = UDim2.new(0, 5, 1, -35)
+ExecuteBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ExecuteBtn.BorderColor3 = Color3.fromRGB(0, 255, 0)
+ExecuteBtn.Text = "Execute"
+ExecuteBtn.TextColor3 = Color3.fromRGB(0, 255, 0)
+ExecuteBtn.Font = Enum.Font.Code
+ExecuteBtn.TextSize = 14
+ExecuteBtn.Parent = ContentFrame
+
+-- Clear Button
+local ClearBtn = ExecuteBtn:Clone()
+ClearBtn.Position = UDim2.new(0, 110, 1, -35)
+ClearBtn.Text = "Clear"
+ClearBtn.Parent = ContentFrame
+
+-- Scripts Frame
+local ScriptsFrame = Instance.new("Frame")
+ScriptsFrame.Size = UDim2.new(0, 93, 1, -headerHeight)
+ScriptsFrame.Position = UDim2.new(1, 10, 0, headerHeight)
+ScriptsFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ScriptsFrame.BorderColor3 = Color3.fromRGB(0, 255, 0)
+ScriptsFrame.Visible = false
+ScriptsFrame.Parent = MainFrame
+
+local ScrollScripts = Instance.new("ScrollingFrame")
+ScrollScripts.Size = UDim2.new(1, -6, 1, -6)
+ScrollScripts.Position = UDim2.new(0, 3, 0, 3)
+ScrollScripts.BackgroundTransparency = 1
+ScrollScripts.ScrollBarThickness = 6
+ScrollScripts.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ScrollScripts.Parent = ScriptsFrame
+
+local scriptList = {
+{"PrivServer", 'loadstring(game:HttpGet("https://raw.githubusercontent.com/veil0x14/LocalScripts/refs/heads/main/pg.lua"))()'},
+{"IY", "loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()"},
+{"Explorer",  [[loadstring(game:HttpGet("https://raw.githubusercontent.com/UltraFEmotes/im-bored/refs/heads/main/dexnoapi.lua"))()]]},
+{"Script 4", ""},
+{"Script 5", ""}
+}
+
+for i, data in ipairs(scriptList) do
+local btn = Instance.new("TextButton")
+btn.Size = UDim2.new(1, -13, 0, 28)
+btn.Position = UDim2.new(0, 3, 0, (i - 1) * 32)
+btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+btn.BorderColor3 = Color3.fromRGB(0, 255, 0)
+btn.Text = data[1]
+btn.TextColor3 = Color3.fromRGB(0, 255, 0)
+btn.Font = Enum.Font.Code
+btn.TextSize = 14
+btn.Parent = ScrollScripts
+btn.MouseButton1Click:Connect(function()
+if data[2] ~= "" then
+loadstring(data[2])()
+end
+end)
+end
+
+-- Resize handle
+local ResizeCorner = Instance.new("Frame")
+ResizeCorner.Size = UDim2.new(0, 20, 0, 20)
+ResizeCorner.Position = UDim2.new(1, -20, 1, -20)
+ResizeCorner.BackgroundTransparency = 1
+ResizeCorner.Parent = MainFrame
+
+for i = 1, 3 do
+local line = Instance.new("Frame")
+line.Size = UDim2.new(0, 3, 0, 3)
+line.Position = UDim2.new(1, -6 - (i * 4), 1, -6 - (i * 4))
+line.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+line.BorderSizePixel = 0
+line.Parent = ResizeCorner
+end
+
+-- Confirm Delete
+local ConfirmFrame = Instance.new("Frame")
+ConfirmFrame.Size = UDim2.new(0, 260, 0, 120)
+ConfirmFrame.Position = UDim2.new(0.5, -130, 0.5, -60)
+ConfirmFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+ConfirmFrame.BorderColor3 = Color3.fromRGB(0, 255, 0)
+ConfirmFrame.Visible = false
+ConfirmFrame.Parent = ScreenGui
+
+local ConfirmText = Instance.new("TextLabel")
+ConfirmText.Size = UDim2.new(1, -12, 0, 60)
+ConfirmText.Position = UDim2.new(0, 6, 0, 6)
+ConfirmText.BackgroundTransparency = 1
+ConfirmText.Text = "Remove SpectraX Executor?"
+ConfirmText.TextColor3 = Color3.fromRGB(0, 255, 0)
+ConfirmText.Font = Enum.Font.Code
+ConfirmText.TextSize = 14
+ConfirmText.Parent = ConfirmFrame
+
+local YesBtn = Instance.new("TextButton")
+YesBtn.Size = UDim2.new(0.48, 0, 0, 34)
+YesBtn.Position = UDim2.new(0, 6, 1, -40)
+YesBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+YesBtn.BorderColor3 = Color3.fromRGB(0, 255, 0)
+YesBtn.Text = "Yes"
+YesBtn.TextColor3 = Color3.fromRGB(0, 255, 0)
+YesBtn.Font = Enum.Font.Code
+YesBtn.TextSize = 14
+YesBtn.Parent = ConfirmFrame
+
+local NoBtn = YesBtn:Clone()
+NoBtn.Position = UDim2.new(0.52, -6, 1, -40)
+NoBtn.Text = "No"
+NoBtn.Parent = ConfirmFrame
+
+-- Tombol Logic
+ExecuteBtn.MouseButton1Click:Connect(function()
+if Source.Text ~= "" then
+local success, err = pcall(function()
+loadstring(Source.Text)()
+end)
+if not success then warn(err) end
+end
+end)
+
+ClearBtn.MouseButton1Click:Connect(function()
+Source.Text = ""
+end)
+
+CloseButton.MouseButton1Click:Connect(function()
+ConfirmFrame.Visible = true
+end)
+
+YesBtn.MouseButton1Click:Connect(function()
+ScreenGui:Destroy()
+end)
+
+NoBtn.MouseButton1Click:Connect(function()
+ConfirmFrame.Visible = false
+end)
+
+-- Tombol Scripts
+ScriptsButton.MouseButton1Click:Connect(function()
+scriptsVisible = not scriptsVisible
+ScriptsFrame.Visible = scriptsVisible
+end)
+
+-- Drag
+local dragging = false
+local dragStart, startPos
+
+Header.InputBegan:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+dragging = true
+dragStart = input.Position
+startPos = MainFrame.Position
+input.Changed:Connect(function()
+if input.UserInputState == Enum.UserInputState.End then
+dragging = false
+end
+end)
+end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+if dragging then
+local delta = input.Position - dragStart
+MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+end)
+
+-- Resize
+local resizing = false
+local startPosR, startSize
+
+ResizeCorner.InputBegan:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+resizing = true
+startPosR = input.Position
+startSize = MainFrame.Size
+input.Changed:Connect(function()
+if input.UserInputState == Enum.UserInputState.End then
+resizing = false
+end
+end)
+end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+if resizing then
+local delta = input.Position - startPosR
+local newW = math.max(minWidth, startSize.X.Offset + delta.X)
+local newH = math.max(minHeight, startSize.Y.Offset + delta.Y)
+MainFrame.Size = UDim2.new(0, newW, 0, newH)
+lastSize = MainFrame.Size
+end
+end)
+
+-- Minimize logic
+MinimizeButton.MouseButton1Click:Connect(function()
+if contentVisible then
+lastSize = MainFrame.Size
+ContentFrame.Visible = false
+ResizeCorner.Visible = false
+ScriptsFrame.Visible = false
+MainFrame.Size = UDim2.new(0, lastSize.X.Offset, 0, headerHeight)
+else
+ContentFrame.Visible = true
+ResizeCorner.Visible = true
+if scriptsVisible then
+ScriptsFrame.Visible = true
+end
+MainFrame.Size = lastSize
+end
+contentVisible = not contentVisible
+end)
+
