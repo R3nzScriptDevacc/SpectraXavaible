@@ -155,22 +155,26 @@ local scriptList = {
 {"C4 Bomb", [[loadstring(game:HttpGet("https://pastefy.app/M0r9UCNQ/raw",true))()]]}}
 
 for i, data in ipairs(scriptList) do
-local btn = Instance.new("TextButton")
-btn.Size = UDim2.new(1, -13, 0, 28)
-btn.Position = UDim2.new(0, 3, 0, (i - 1) * 32 + 2)
-btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-btn.BorderColor3 = Color3.fromRGB(0, 255, 0)
-btn.Text = data[1]
-btn.TextColor3 = Color3.fromRGB(0, 255, 0)
-btn.Font = Enum.Font.Code
-btn.TextSize = 14
-btn.Parent = ScrollScripts
-btn.MouseButton1Click:Connect(function()
-if data[2] ~= "" then
-loadstring(data[2])()
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, -13, 0, 28)
+    btn.Position = UDim2.new(0, 3, 0, (i - 1) * 33 + 2) -- ✨ padding antar tombol
+    btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    btn.BorderColor3 = Color3.fromRGB(0, 255, 0)
+    btn.Text = data[1]
+    btn.TextColor3 = Color3.fromRGB(0, 255, 0)
+    btn.Font = Enum.Font.Code
+    btn.TextSize = 14
+    btn.Parent = ScrollScripts
+
+    btn.MouseButton1Click:Connect(function()
+        if data[2] ~= "" then
+            loadstring(data[2])()
+        end
+    end)
 end
-end)
-end
+
+-- ✨ Update ukuran canvas biar semua tombol bisa discroll
+ScrollScripts.CanvasSize = UDim2.new(0, 0, 0, (#scriptList * 33) + 10)
 
 -- Resize Handle
 local ResizeCorner = Instance.new("Frame")
