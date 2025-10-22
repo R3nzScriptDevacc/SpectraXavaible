@@ -151,7 +151,8 @@ local scriptList = {
 {"Dual Sword", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/gObl00x/Pendulum-Fixed-AND-Others-Scripts/refs/heads/main/Dual%20Ultima%20RB%20Swords"))()]]},
 {"F3X Tool", [[loadstring(game:GetObjects("rbxassetid://6695644299")[1].Source)()]]},
 {"VFLY", [[loadstring(game:HttpGet("https://pastebin.com/raw/hX2s2DVY"))()]]},
-{"Ak47", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/sinret/rbxscript.com-scripts-reuploads-/main/ak47", true))()]]}}
+{"Ak47", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/sinret/rbxscript.com-scripts-reuploads-/main/ak47", true))()]]},
+{"C4 Bomb", [[loadstring(game:HttpGet("https://pastefy.app/M0r9UCNQ/raw",true))()]]}}
 
 for i, data in ipairs(scriptList) do
 local btn = Instance.new("TextButton")
