@@ -255,8 +255,13 @@ end)
 
 -- Scripts Button
 ScriptsButton.MouseButton1Click:Connect(function()
-scriptsVisible = not scriptsVisible
-ScriptsFrame.Visible = scriptsVisible
+	-- Cegah membuka ScriptsFrame kalau GUI lagi diminimize
+	if not contentVisible then
+		return
+	end
+
+	scriptsVisible = not scriptsVisible
+	ScriptsFrame.Visible = scriptsVisible
 end)
 
 -- Drag
