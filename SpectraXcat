@@ -142,7 +142,7 @@ ScrollScripts.AutomaticCanvasSize = Enum.AutomaticSize.Y
 ScrollScripts.Parent = ScriptsFrame
 
 local scriptList = {
-{"Nebula", 'loadstring(game:HttpGet("https://pastebin.com/raw/ieJZauwd"))()'},
+{"Nebula", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/nicolasbarbosa323/nebulaglitcher/refs/heads/main/Nebula's%20Star%20Glitcher%20(EDITED%20BY%20FENIX7667%20IMORTAL%20EDIT%20).txt"))()]]},
 {"BetterIY", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Malrous/betteriy/refs/heads/main/biy"))()]]},
 {"Explorer",  [[loadstring(game:HttpGet("https://raw.githubusercontent.com/UltraFEmotes/im-bored/refs/heads/main/dexnoapi.lua"))()]]},
 {"c00lgui", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/MiRw3b/c00lgui-v3rx/main/c00lguiv3rx.lua"))()]]},
