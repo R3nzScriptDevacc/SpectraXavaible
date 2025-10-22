@@ -145,7 +145,7 @@ local scriptList = {
 {"Nebula", 'loadstring(game:HttpGet("https://pastebin.com/raw/ieJZauwd"))()'},
 {"BetterIY", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Malrous/betteriy/refs/heads/main/biy"))()]]},
 {"Explorer",  [[loadstring(game:HttpGet("https://raw.githubusercontent.com/UltraFEmotes/im-bored/refs/heads/main/dexnoapi.lua"))()]]},
-{"c00lgui", [[loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-c00lgui-reborn-45450"))()]]},
+{"c00lgui", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/MiRw3b/c00lgui-v3rx/main/c00lguiv3rx.lua"))()]]},
 {"Rc7 Cloud", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/R3nzScriptDevacc/Cloud/refs/heads/main/CloudRc7"))()]]},
 {"John Doe", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/retpirato/Roblox-Scripts/refs/heads/master/John%20Doe.lua", true))()]]},
 {"Dual Sword", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/gObl00x/Pendulum-Fixed-AND-Others-Scripts/refs/heads/main/Dual%20Ultima%20RB%20Swords"))()]]},
