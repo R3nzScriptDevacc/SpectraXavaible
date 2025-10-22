@@ -73,7 +73,7 @@ Scroll.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Scroll.BorderColor3 = Color3.fromRGB(0, 255, 0)
 Scroll.ScrollBarThickness = 6
 Scroll.ScrollingEnabled = true
-Scroll.CanvasSize = UDim2.new(0, 0, 0, 352)
+Scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 Scroll.AutomaticCanvasSize = Enum.AutomaticSize.None
 Scroll.Parent = ContentFrame
 
