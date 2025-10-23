@@ -153,7 +153,8 @@ local scriptList = {
 {"VFLY", [[loadstring(game:HttpGet("https://pastebin.com/raw/hX2s2DVY"))()]]},
 {"Ak47", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/sinret/rbxscript.com-scripts-reuploads-/main/ak47", true))()]]},
 {"C4 Bomb", [[loadstring(game:HttpGet("https://pastefy.app/M0r9UCNQ/raw",true))()]]},
-{"Anti Ban/..", [[loadstring(game:HttpGet("https://pastefy.app/bvmTbruZ/raw"))()]]}}
+{"Anti Ban/..", [[loadstring(game:HttpGet("https://pastefy.app/bvmTbruZ/raw"))()]]},
+{"Fly Gui", [[loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()]]}}
 
 for i, data in ipairs(scriptList) do
     local btn = Instance.new("TextButton")
